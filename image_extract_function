@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jan  9 22:41:07 2022
+
+@author: jay
+"""
+from PIL import Image
+from numpy import asarray
+
+def extract_image(pic_name):
+    
+    ## Only works with image files named as follows: image_name123567.format
+    ## where 123 is desired picture horizontal length & 567 is desired
+    ## picture vertical height
+    
+    
+    
+    ## Opens image, converts colour format to RGB, formats
+    ## picture as numpy array
+    
+    image = Image.open(pic_name)
+    image = image.convert('RGB')
+    picture = asarray(image)
+    
+    
+    ## Find and records resolution of image
+    
+    info = image.size
+    h_res = info[0]
+    v_res = info[1]
+    
+    
+    ## Retrieves desired picture pixel resolution from title
+    
+    pos = pic_name.index('.')
+    pic_name_cut = pic_name[:pos]
+    h_pic_res = pic_name_cut[-6:-3]
+    v_pic_res = pic_name_cut[-3:]
+    
+    #print(h_pic_res)
+    #print(v_pic_res)
+    
+    
+    ## Divides real resolution into desired resolution chunks
+    
+    h_div = int(int(h_res) / int(h_pic_res))
+    v_div = int(int(v_res) / int(v_pic_res))
+    
+    
+    ## Creates list with appropriate amount of sublists to contain all pixels
+    
+    img_map = []
+    for i in range(int(v_pic_res)):
+        img_map.append([])
+    
+    
+    ## Goes through image and retrieves RGB colour values of each pixel
+    ## and stores them as a list within the appropriate sublist for that
+    ## pixel i.e. [[[0, 0, 0]],[],[]]
+    
+    #print(range(int(v_pic_res)))
+    #print(range(int(h_pic_res)))
+    
+    for i in range(int(v_pic_res)):
+        for n in range(int(h_pic_res)):
+            x_val = 2 + n * v_div
+            y_val = 2 + i * h_div
+        
+            
+            #print('hos', x_val, n)
+            #print('vert', y_val, i)
+                   
+            col = picture[x_val, y_val]
+            img_map[n].append((col.tolist())[:3])
+    
+    print(img_map)
+    
+#extract_image('chess_board008008.jpeg')
+#extract_image('test002002.png')
+extract_image('apple010012.png')
+#extract_image('apple012012.png')
