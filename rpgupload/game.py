@@ -42,12 +42,33 @@ class Game():
 
     def update(self):
 
+
+
+
+        self.apple.x += 1
+        self.graphics.draw(self.apple)
         self.graphics.update()
-        pygame.display.update()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         keys = pygame.key.get_pressed()
         events = pygame.event.get()
 
-        self.graphics.draw(self.apple)
+
 
 
 

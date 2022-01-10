@@ -15,6 +15,9 @@ class Graphics():
         self.temp = []
         self.hcounter = 0
         self.vcounter = 0
+        self.background = []
+        self.drawlist = []
+        self.drawlisttemp = []
 
         RED = (255, 0, 0)
         GREEN = (0, 255, 0)
@@ -25,15 +28,20 @@ class Graphics():
         while self.vcounter < self.vertical:
             for i in range(self.horizontal):
                 self.temp.append(Pixel(i*12, self.vcounter * 12, [200, 200, 200]))
+                self.drawlisttemp.append(0)
 
 
-            self.glist.append(self.temp)
+            self.background.append(self.temp)
+            self.drawlist.append(self.drawlisttemp)
+
             self.temp = []
+            self.drawlisttemp = []
             self.vcounter += 1
 
-        for i in self.glist:
-            for n in i:
-                pygame.draw.rect(self.screen, n.col, n.rect)
+
+
+
+        self.glist = self.background
 
 
 
@@ -42,6 +50,7 @@ class Graphics():
 
 
     def draw(self, object):
+
         if object.x == -1 or object.y == -1:
             return
         counterx = 0
@@ -61,6 +70,12 @@ class Graphics():
                 if object.art.img_map[countery][counterx] != [0, 0, 0]:
 
                     self.glist[object.y + countery][object.x + counterx].col = object.art.img_map[countery][counterx]
+
+                    self.drawlist[object.y + countery][object.x + counterx] = 1
+
+
+
+
                 else:
                     pass
 
@@ -72,17 +87,28 @@ class Graphics():
 
 
 
-            pass
-
-
-
 
 
 
     def update(self):
-        for i in self.glist:
+        counterx = 0
+        countery = -1
+
+
+
+
+        for i in self.background:
             for n in i:
                 pygame.draw.rect(self.screen, n.col, n.rect)
+
+
+
+
+
+
+
+
+        pygame.display.update()
 
 
 

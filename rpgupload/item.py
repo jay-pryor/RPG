@@ -4,6 +4,6 @@ class Item():
         self.x = 1
         self.y = 1
         if item == "apple":
-            self.art = Art(r"C:\Users\Snek\PycharmProjects\rpg\art\apple012012.png")
+            self.art = Art(r"art\apple012012.png")
 
 
